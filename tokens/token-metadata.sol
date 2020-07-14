@@ -8,7 +8,7 @@ contract CQITokenMetadata is CQIToken,ERC721Metadata{
 
   string internal CQIName;
 
-  string internal CQItSymbol;
+  string internal CQISymbol;
 
   mapping (uint256 => string) internal idToUri;
 
@@ -21,7 +21,7 @@ contract CQITokenMetadata is CQIToken,ERC721Metadata{
   }
 
   function symbol()external override view returns (string memory _symbol){
-    _symbol = CQItSymbol;
+    _symbol = CQISymbol;
   }
 
   
