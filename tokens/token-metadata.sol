@@ -6,7 +6,7 @@ import "./erc721-metadata.sol";
 
 contract CQITokenMetadata is CQIToken,ERC721Metadata{
 
-  string internal CQItName;
+  string internal CQIName;
 
   string internal CQItSymbol;
 
@@ -17,7 +17,7 @@ contract CQITokenMetadata is CQIToken,ERC721Metadata{
   }
 
   function name()external override view returns (string memory _name){
-    _name = CQItName;
+    _name = CQIName;
   }
 
   function symbol()external override view returns (string memory _symbol){

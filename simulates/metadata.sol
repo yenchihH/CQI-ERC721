@@ -6,8 +6,8 @@ import "../ownership/ownable.sol";
 contract CQITokenMetadataMock is CQITokenMetadata,Ownable{
 
   constructor(string memory _name,string memory _symbol)public{
-    CQItName = _name;
-    CQItSymbol = _symbol;
+    CQIName = _name;
+    CQISymbol = _symbol;
   }
 
   function mint(address _to,uint256 _tokenId,string calldata _uri)external onlyOwner{
