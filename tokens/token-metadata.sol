@@ -1,0 +1,46 @@
+pragma solidity 0.6.2;
+
+import "./CQItoken.sol";
+import "./erc721-metadata.sol";
+
+
+contract NFTokenMetadata is NFToken,ERC721Metadata{
+
+  string internal nftName;
+
+  string internal nftSymbol;
+
+  mapping (uint256 => string) internal idToUri;
+
+  constructor()public{
+    supportedInterfaces[0x5b5e139f] = true; // ERC721Metadata
+  }
+
+  function name()external override view returns (string memory _name){
+    _name = nftName;
+  }
+
+  function symbol()external override viewreturns (string memory _symbol){
+    _symbol = nftSymbol;
+  }
+
+  
+  function tokenURI(uint256 _tokenId)external override view validNFToken(_tokenId) returns (string memory){
+    return idToUri[_tokenId];
+  }
+
+ 
+  function _burn(uint256 _tokenId)internal override virtual{
+    super._burn(_tokenId);
+
+    if (bytes(idToUri[_tokenId]).length != 0)
+    {
+      delete idToUri[_tokenId];
+    }
+  }
+
+  function _setTokenUri(uint256 _tokenId,string memory _uri)internal validNFToken(_tokenId){
+    idToUri[_tokenId] = _uri;
+  }
+
+}
