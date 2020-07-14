@@ -7,7 +7,7 @@ import "../utils/interface.sol";
 import "../utils/address-utils.sol";
 
 
-contract NFToken isERC721,SupportsInterface{
+contract NFToken is ERC721,SupportsInterface{
   using SafeMath for uint256;
   using AddressUtils for address;
 
