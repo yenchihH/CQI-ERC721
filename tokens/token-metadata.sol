@@ -4,11 +4,11 @@ import "./CQItoken.sol";
 import "./erc721-metadata.sol";
 
 
-contract NFTokenMetadata is NFToken,ERC721Metadata{
+contract CQITokenMetadata is CQIToken,ERC721Metadata{
 
-  string internal nftName;
+  string internal CQItName;
 
-  string internal nftSymbol;
+  string internal CQItSymbol;
 
   mapping (uint256 => string) internal idToUri;
 
@@ -17,15 +17,15 @@ contract NFTokenMetadata is NFToken,ERC721Metadata{
   }
 
   function name()external override view returns (string memory _name){
-    _name = nftName;
+    _name = CQItName;
   }
 
   function symbol()external override view returns (string memory _symbol){
-    _symbol = nftSymbol;
+    _symbol = CQItSymbol;
   }
 
   
-  function tokenURI(uint256 _tokenId)external override view validNFToken(_tokenId) returns (string memory){
+  function tokenURI(uint256 _tokenId)external override view validCQIToken(_tokenId) returns (string memory){
     return idToUri[_tokenId];
   }
 
@@ -39,7 +39,7 @@ contract NFTokenMetadata is NFToken,ERC721Metadata{
     }
   }
 
-  function _setTokenUri(uint256 _tokenId,string memory _uri)internal validNFToken(_tokenId){
+  function _setTokenUri(uint256 _tokenId,string memory _uri)internal validCQIToken(_tokenId){
     idToUri[_tokenId] = _uri;
   }
 

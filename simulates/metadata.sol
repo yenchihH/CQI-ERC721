@@ -3,11 +3,11 @@ pragma solidity 0.6.2;
 import "../tokens/token-metadata.sol";
 import "../ownership/ownable.sol";
 
-contract NFTokenMetadataMock is NFTokenMetadata,Ownable{
+contract CQITokenMetadataMock is CQITokenMetadata,Ownable{
 
   constructor(string memory _name,string memory _symbol)public{
-    nftName = _name;
-    nftSymbol = _symbol;
+    CQItName = _name;
+    CQItSymbol = _symbol;
   }
 
   function mint(address _to,uint256 _tokenId,string calldata _uri)external onlyOwner{

@@ -7,16 +7,16 @@ import "../utils/interface.sol";
 import "../utils/address-utils.sol";
 
 
-contract NFToken is ERC721,SupportsInterface{
+contract CQIToken is ERC721,SupportsInterface{
   using SafeMath for uint256;
   using AddressUtils for address;
 
   string constant ZERO_ADDRESS = "003001";
-  string constant NOT_VALID_NFT = "003002";
+  string constant NOT_VALID_CQIT = "003002";
   string constant NOT_OWNER_OR_OPERATOR = "003003";
   string constant NOT_OWNER_APPROWED_OR_OPERATOR = "003004";
-  string constant NOT_ABLE_TO_RECEIVE_NFT = "003005";
-  string constant NFT_ALREADY_EXISTS = "003006";
+  string constant NOT_ABLE_TO_RECEIVE_CQIT = "003005";
+  string constant CQIT_ALREADY_EXISTS = "003006";
   string constant NOT_OWNER = "003007";
   string constant IS_OWNER = "003008";
 
@@ -27,7 +27,7 @@ contract NFToken is ERC721,SupportsInterface{
 
   mapping (uint256 => address) internal idToApproval;
 
-  mapping (address => uint256) private ownerToNFTokenCount;
+  mapping (address => uint256) private ownerToCQITokenCount;
 
   mapping (address => mapping (address => bool)) internal ownerToOperators;
 
@@ -50,8 +50,8 @@ contract NFToken is ERC721,SupportsInterface{
     _;
   }
 
-  modifier validNFToken(uint256 _tokenId){
-    require(idToOwner[_tokenId] != address(0), NOT_VALID_NFT);
+  modifier validCQIToken(uint256 _tokenId){
+    require(idToOwner[_tokenId] != address(0), NOT_VALID_CQIT);
     _;
   }
 
@@ -67,14 +67,14 @@ contract NFToken is ERC721,SupportsInterface{
     _safeTransferFrom(_from, _to, _tokenId, "");
   }
 
-  function transferFrom(address _from,address _to,uint256 _tokenId)external override canTransfer(_tokenId) validNFToken(_tokenId){
+  function transferFrom(address _from,address _to,uint256 _tokenId)external override canTransfer(_tokenId) validCQIToken(_tokenId){
     address tokenOwner = idToOwner[_tokenId];
     require(tokenOwner == _from, NOT_OWNER);
     require(_to != address(0), ZERO_ADDRESS);
     _transfer(_to, _tokenId);
   }
 
-  function approve(address _approved,uint256 _tokenId)external override canOperate(_tokenId) validNFToken(_tokenId){
+  function approve(address _approved,uint256 _tokenId)external override canOperate(_tokenId) validCQIToken(_tokenId){
     address tokenOwner = idToOwner[_tokenId];
     require(_approved != tokenOwner, IS_OWNER);
 
@@ -90,16 +90,16 @@ contract NFToken is ERC721,SupportsInterface{
   
   function balanceOf(address _owner)external override view returns (uint256){
     require(_owner != address(0), ZERO_ADDRESS);
-    return _getOwnerNFTCount(_owner);
+    return _getOwnerCQITCount(_owner);
   }
 
   function ownerOf(uint256 _tokenId)external override view returns (address _owner){
     _owner = idToOwner[_tokenId];
-    require(_owner != address(0), NOT_VALID_NFT);
+    require(_owner != address(0), NOT_VALID_CQIT);
   }
 
   
-  function getApproved(uint256 _tokenId)external override view validNFToken(_tokenId) returns (address){
+  function getApproved(uint256 _tokenId)external override view validCQIToken(_tokenId) returns (address){
     return idToApproval[_tokenId];
   }
 
@@ -112,49 +112,49 @@ contract NFToken is ERC721,SupportsInterface{
     address from = idToOwner[_tokenId];
     _clearApproval(_tokenId);
 
-    _removeNFToken(from, _tokenId);
-    _addNFToken(_to, _tokenId);
+    _removeCQIToken(from, _tokenId);
+    _addCQIToken(_to, _tokenId);
 
     emit Transfer(from, _to, _tokenId);
   }
 
   function _mint(address _to,uint256 _tokenId)internal virtual{
     require(_to != address(0), ZERO_ADDRESS);
-    require(idToOwner[_tokenId] == address(0), NFT_ALREADY_EXISTS);
+    require(idToOwner[_tokenId] == address(0), CQIT_ALREADY_EXISTS);
 
-    _addNFToken(_to, _tokenId);
+    _addCQIToken(_to, _tokenId);
 
     emit Transfer(address(0), _to, _tokenId);
   }
 
  
-  function _burn(uint256 _tokenId)internal virtual validNFToken(_tokenId){
+  function _burn(uint256 _tokenId)internal virtual validCQIToken(_tokenId){
     address tokenOwner = idToOwner[_tokenId];
     _clearApproval(_tokenId);
-    _removeNFToken(tokenOwner, _tokenId);
+    _removeCQIToken(tokenOwner, _tokenId);
     emit Transfer(tokenOwner, address(0), _tokenId);
   }
 
   
-  function _removeNFToken(address _from,uint256 _tokenId)internal virtual{
+  function _removeCQIToken(address _from,uint256 _tokenId)internal virtual{
     require(idToOwner[_tokenId] == _from, NOT_OWNER);
-    ownerToNFTokenCount[_from] = ownerToNFTokenCount[_from] - 1;
+    ownerToCQITokenCount[_from] = ownerToCQITokenCount[_from] - 1;
     delete idToOwner[_tokenId];
   }
 
-  function _addNFToken(address _to,uint256 _tokenId)internal virtual{
-    require(idToOwner[_tokenId] == address(0), NFT_ALREADY_EXISTS);
+  function _addCQIToken(address _to,uint256 _tokenId)internal virtual{
+    require(idToOwner[_tokenId] == address(0), CQIT_ALREADY_EXISTS);
 
     idToOwner[_tokenId] = _to;
-    ownerToNFTokenCount[_to] = ownerToNFTokenCount[_to].add(1);
+    ownerToCQITokenCount[_to] = ownerToCQITokenCount[_to].add(1);
   }
 
-  function _getOwnerNFTCount(address _owner)internal virtual view returns (uint256){
-    return ownerToNFTokenCount[_owner];
+  function _getOwnerCQITCount(address _owner)internal virtual view returns (uint256){
+    return ownerToCQITokenCount[_owner];
   }
 
   
-  function _safeTransferFrom(address _from,address _to,uint256 _tokenId,bytes memory _data)private canTransfer(_tokenId) validNFToken(_tokenId){
+  function _safeTransferFrom(address _from,address _to,uint256 _tokenId,bytes memory _data)private canTransfer(_tokenId) validCQIToken(_tokenId){
     address tokenOwner = idToOwner[_tokenId];
     require(tokenOwner == _from, NOT_OWNER);
     require(_to != address(0), ZERO_ADDRESS);
@@ -164,7 +164,7 @@ contract NFToken is ERC721,SupportsInterface{
     if (_to.isContract())
     {
       bytes4 retval = ERC721TokenReceiver(_to).onERC721Received(msg.sender, _from, _tokenId, _data);
-      require(retval == MAGIC_ON_ERC721_RECEIVED, NOT_ABLE_TO_RECEIVE_NFT);
+      require(retval == MAGIC_ON_ERC721_RECEIVED, NOT_ABLE_TO_RECEIVE_CQIT);
     }
   }
 
