@@ -20,7 +20,7 @@ contract NFTokenMetadata is NFToken,ERC721Metadata{
     _name = nftName;
   }
 
-  function symbol()external override viewreturns (string memory _symbol){
+  function symbol()external override view returns (string memory _symbol){
     _symbol = nftSymbol;
   }
 

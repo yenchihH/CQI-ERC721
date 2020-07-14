@@ -35,42 +35,14 @@ contract NFTokenEnumerable is NFToken,ERC721Enumerable{
     return ownerToIds[_owner][_index];
   }
 
-  /**
-   * @dev Mints a new NFT.
-   * @notice This is an internal function which should be called from user-implemented external
-   * mint function. Its purpose is to show and properly initialize data structures when using this
-   * implementation.
-   * @param _to The address that will own the minted NFT.
-   * @param _tokenId of the NFT to be minted by the msg.sender.
-   */
-  function _mint(
-    address _to,
-    uint256 _tokenId
-  )
-    internal
-    override
-    virtual
-  {
+
+  function _mint(address _to,uint256 _tokenId)internal override virtual{
     super._mint(_to, _tokenId);
     tokens.push(_tokenId);
     idToIndex[_tokenId] = tokens.length - 1;
   }
 
-  /**
-   * @dev Burns a NFT.
-   * @notice This is an internal function which should be called from user-implemented external
-   * burn function. Its purpose is to show and properly initialize data structures when using this
-   * implementation. Also, note that this burn implementation allows the minter to re-mint a burned
-   * NFT.
-   * @param _tokenId ID of the NFT to be burned.
-   */
-  function _burn(
-    uint256 _tokenId
-  )
-    internal
-    override
-    virtual
-  {
+  function _burn(uint256 _tokenId)internal overridevirtual{
     super._burn(_tokenId);
 
     uint256 tokenIndex = idToIndex[_tokenId];
