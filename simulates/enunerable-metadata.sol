@@ -5,16 +5,16 @@ import "../tokens/token-enumerable.sol";
 import "../ownership/ownable.sol";
 
 
-contract NFTokenMetadataEnumerableMock is
-  NFTokenEnumerable,
-  NFTokenMetadata,
+contract CQITokenMetadataEnumerableMock is
+  CQITokenEnumerable,
+  CQITokenMetadata,
   Ownable
 {
 
   
   constructor(string memory _name,string memory _symbol)public{
-    nftName = _name;
-    nftSymbol = _symbol;
+    CQItName = _name;
+    CQItSymbol = _symbol;
   }
 
   function mint(address _to,uint256 _tokenId,string calldata _uri)external onlyOwner{
@@ -26,13 +26,13 @@ contract NFTokenMetadataEnumerableMock is
     super._burn(_tokenId);
   }
 
-  function _mint(address _to,uint256 _tokenId)internal override(NFToken, NFTokenEnumerable)virtual{
-    NFTokenEnumerable._mint(_to, _tokenId);
+  function _mint(address _to,uint256 _tokenId)internal override(CQIToken, CQITokenEnumerable)virtual{
+    CQITokenEnumerable._mint(_to, _tokenId);
   }
 
   
-  function _burn(uint256 _tokenId)internal override(NFTokenMetadata, NFTokenEnumerable)virtual{
-    NFTokenEnumerable._burn(_tokenId);
+  function _burn(uint256 _tokenId)internal override(CQITokenMetadata, CQITokenEnumerable)virtual{
+    CQITokenEnumerable._burn(_tokenId);
     if (bytes(idToUri[_tokenId]).length != 0)
     {
       delete idToUri[_tokenId];
@@ -40,16 +40,16 @@ contract NFTokenMetadataEnumerableMock is
   }
 
 
-  function _removeNFToken(address _from,uint256 _tokenId)internal override(NFToken, NFTokenEnumerable){
-    NFTokenEnumerable._removeNFToken(_from, _tokenId);
+  function _removeCQIToken(address _from,uint256 _tokenId)internal override(CQIToken, CQITokenEnumerable){
+    CQITokenEnumerable._removeCQIToken(_from, _tokenId);
   }
 
-  function _addNFToken(address _to,uint256 _tokenId)internal override(NFToken, NFTokenEnumerable){
-    NFTokenEnumerable._addNFToken(_to, _tokenId);
+  function _addCQIToken(address _to,uint256 _tokenId)internal override(CQIToken, CQITokenEnumerable){
+    CQITokenEnumerable._addCQIToken(_to, _tokenId);
   }
 
-  function _getOwnerNFTCount(address _owner)internal override(NFToken, NFTokenEnumerable)view returns (uint256){
-    return NFTokenEnumerable._getOwnerNFTCount(_owner);
+  function _getOwnerCQITCount(address _owner)internal override(CQIToken, CQITokenEnumerable)view returns (uint256){
+    return CQITokenEnumerable._getOwnerCQITCount(_owner);
   }
 
 }

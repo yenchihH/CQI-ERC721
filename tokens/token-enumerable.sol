@@ -4,7 +4,7 @@ import "./CQItoken.sol";
 import "./erc721-enumerable.sol";
 
 
-contract NFTokenEnumerable is NFToken,ERC721Enumerable{
+contract CQITokenEnumerable is CQIToken,ERC721Enumerable{
 
   string constant INVALID_INDEX = "005007";
 
@@ -58,7 +58,7 @@ contract NFTokenEnumerable is NFToken,ERC721Enumerable{
   }
 
   
-  function _removeNFToken(address _from,uint256 _tokenId)internal override virtual{
+  function _removeCQIToken(address _from,uint256 _tokenId)internal override virtual{
     require(idToOwner[_tokenId] == _from, NOT_OWNER);
     delete idToOwner[_tokenId];
 
@@ -75,15 +75,15 @@ contract NFTokenEnumerable is NFToken,ERC721Enumerable{
     ownerToIds[_from].pop();
   }
 
-  function _addNFToken(address _to,uint256 _tokenId)internal override virtual{
-    require(idToOwner[_tokenId] == address(0), NFT_ALREADY_EXISTS);
+  function _addCQIToken(address _to,uint256 _tokenId)internal override virtual{
+    require(idToOwner[_tokenId] == address(0), CQIT_ALREADY_EXISTS);
     idToOwner[_tokenId] = _to;
 
     ownerToIds[_to].push(_tokenId);
     idToOwnerIndex[_tokenId] = ownerToIds[_to].length - 1;
   }
 
-  function _getOwnerNFTCount(address _owner)internal override virtual view returns (uint256){
+  function _getOwnerCQITCount(address _owner)internal override virtual view returns (uint256){
     return ownerToIds[_owner].length;
   }
 }
