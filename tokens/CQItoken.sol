@@ -11,7 +11,6 @@ contract CQIToken is ERC721,SupportsInterface{
   using SafeMath for uint256;
   using AddressUtils for address;
 
-  uint256 public totalSupply;
 
   //Address is zero
   string constant ZERO_ADDRESS = "000";
@@ -130,7 +129,6 @@ contract CQIToken is ERC721,SupportsInterface{
     require(idToOwner[_tokenId] == address(0), CQITOKEN_ALREADY_EXISTS);
     
     _addCQIToken(_to, _tokenId);
-    totalSupply+1;
     emit Transfer(address(0), _to, _tokenId);
   }
 
@@ -139,7 +137,6 @@ contract CQIToken is ERC721,SupportsInterface{
     address tokenOwner = idToOwner[_tokenId];
     _clearApproval(_tokenId);
     _removeCQIToken(tokenOwner, _tokenId);
-    totalSupply-1;
     emit Transfer(tokenOwner, address(0), _tokenId);
   }
 
