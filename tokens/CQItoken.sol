@@ -97,6 +97,10 @@ contract CQIToken is ERC721,SupportsInterface{
     return _getOwnerCQITCount(_owner);
   }
 
+  function balance()external override view returns (uint256){
+    return _getOwnerCQITCount(address(this));
+  }
+
   function ownerOf(uint256 _tokenId)external override view returns (address _owner){
     _owner = idToOwner[_tokenId];
     require(_owner != address(0), NOT_VALID_CQITOKEN);
