@@ -6,7 +6,7 @@ import "./erc721-enumerable.sol";
 
 contract CQITokenEnumerable is CQIToken,ERC721Enumerable{
 
-  string constant INVALID_INDEX = "005007";
+  string constant INVALID_INDEX = "500";
 
   uint256[] internal tokens;
 

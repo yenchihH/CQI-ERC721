@@ -3,9 +3,9 @@ pragma solidity 0.6.2;
 
 library SafeMath {
     
-    string constant OVERFLOW = "008001";
-    string constant SUBTRAHEND_GREATER_THENa = "008002";
-    string constant DIVISION_BY_ZERO = "008003";
+    string constant OVERFLOW = "400";
+    string constant SUBTRAHEND_GREATER_THENa = "401";
+    string constant DIVISION_BY_ZERO = "402";
 
     function mul(uint256 a, uint256 b)internal pure returns (uint256 product){
         if (a == 0) {

@@ -21,6 +21,8 @@ interface ERC721{
 
   function balanceOf(address _owner)external view returns (uint256);
 
+  function balance()external view returns (uint256);
+
   function ownerOf(uint256 _tokenId)external view returns (address);
 
   function getApproved(uint256 _tokenId)external view returns (address);
