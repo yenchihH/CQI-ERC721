@@ -19,10 +19,6 @@ interface ERC721{
 
   function setApprovalForAll(address _operator,bool _approved)external;
 
-  function totalSupply()external view returns (uint256);
-
-  function balance()external view returns (uint256);
-
   function ownerOf(uint256 _tokenId)external view returns (address);
 
   function getApproved(uint256 _tokenId)external view returns (address);

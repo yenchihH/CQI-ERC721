@@ -99,9 +99,6 @@ contract CQIToken is ERC721,SupportsInterface{
     return _getOwnerCQITCount(_owner);
   }
 
-  function balance()external override view returns (uint256){
-    return totalSupply;
-  }
 
   function ownerOf(uint256 _tokenId)external override view returns (address _owner){
     _owner = idToOwner[_tokenId];
@@ -131,9 +128,9 @@ contract CQIToken is ERC721,SupportsInterface{
   function _mint(address _to,uint256 _tokenId)internal virtual{
     require(_to != address(0), ZERO_ADDRESS);
     require(idToOwner[_tokenId] == address(0), CQITOKEN_ALREADY_EXISTS);
-
+    
     _addCQIToken(_to, _tokenId);
-
+    totalSupply+1;
     emit Transfer(address(0), _to, _tokenId);
   }
 
@@ -142,6 +139,7 @@ contract CQIToken is ERC721,SupportsInterface{
     address tokenOwner = idToOwner[_tokenId];
     _clearApproval(_tokenId);
     _removeCQIToken(tokenOwner, _tokenId);
+    totalSupply-1;
     emit Transfer(tokenOwner, address(0), _tokenId);
   }
 
