@@ -65,8 +65,7 @@ contract CQITokenEnumerable is CQIToken,ERC721Enumerable{
     uint256 tokenToRemoveIndex = idToOwnerIndex[_tokenId];
     uint256 lastTokenIndex = ownerToIds[_from].length - 1;
 
-    if (lastTokenIndex != tokenToRemoveIndex)
-    {
+    if (lastTokenIndex != tokenToRemoveIndex){
       uint256 lastToken = ownerToIds[_from][lastTokenIndex];
       ownerToIds[_from][tokenToRemoveIndex] = lastToken;
       idToOwnerIndex[lastToken] = tokenToRemoveIndex;
@@ -76,7 +75,7 @@ contract CQITokenEnumerable is CQIToken,ERC721Enumerable{
   }
 
   function _addCQIToken(address _to,uint256 _tokenId)internal override virtual{
-    require(idToOwner[_tokenId] == address(0), CQIT_ALREADY_EXISTS);
+    require(idToOwner[_tokenId] == address(0), CQITOKEN_ALREADY_EXISTS);
     idToOwner[_tokenId] = _to;
 
     ownerToIds[_to].push(_tokenId);

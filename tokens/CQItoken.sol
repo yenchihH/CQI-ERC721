@@ -11,14 +11,19 @@ contract CQIToken is ERC721,SupportsInterface{
   using SafeMath for uint256;
   using AddressUtils for address;
 
-  string constant ZERO_ADDRESS = "003001";
-  string constant NOT_VALID_CQIT = "003002";
-  string constant NOT_OWNER_OR_OPERATOR = "003003";
-  string constant NOT_OWNER_APPROWED_OR_OPERATOR = "003004";
-  string constant NOT_ABLE_TO_RECEIVE_CQIT = "003005";
-  string constant CQIT_ALREADY_EXISTS = "003006";
-  string constant NOT_OWNER = "003007";
-  string constant IS_OWNER = "003008";
+  //Address is zero
+  string constant ZERO_ADDRESS = "000";
+
+  //Token check
+  string constant NOT_VALID_CQITOKEN = "500";
+  string constant NOT_ABLE_TO_RECEIVE_CQITOKEN = "501";
+  string constant CQITOKEN_ALREADY_EXISTS = "502";
+
+  //Owner
+  string constant NOT_OWNER_OR_OPERATOR = "200";
+  string constant NOT_OWNER_APPROWED_OR_OPERATOR = "201";
+  string constant NOT_OWNER = "202";
+  string constant IS_OWNER = "203";
 
  
   bytes4 internal constant MAGIC_ON_ERC721_RECEIVED = 0x150b7a02;
@@ -35,7 +40,6 @@ contract CQIToken is ERC721,SupportsInterface{
 
   event Approval(address indexed _owner,address indexed _approved,uint256 indexed _tokenId);
 
-  
   event ApprovalForAll(address indexed _owner,address indexed _operator,bool _approved);
 
   modifier canOperate(uint256 _tokenId){
@@ -51,7 +55,7 @@ contract CQIToken is ERC721,SupportsInterface{
   }
 
   modifier validCQIToken(uint256 _tokenId){
-    require(idToOwner[_tokenId] != address(0), NOT_VALID_CQIT);
+    require(idToOwner[_tokenId] != address(0), NOT_VALID_CQITOKEN);
     _;
   }
 
@@ -95,7 +99,7 @@ contract CQIToken is ERC721,SupportsInterface{
 
   function ownerOf(uint256 _tokenId)external override view returns (address _owner){
     _owner = idToOwner[_tokenId];
-    require(_owner != address(0), NOT_VALID_CQIT);
+    require(_owner != address(0), NOT_VALID_CQITOKEN);
   }
 
   
@@ -120,7 +124,7 @@ contract CQIToken is ERC721,SupportsInterface{
 
   function _mint(address _to,uint256 _tokenId)internal virtual{
     require(_to != address(0), ZERO_ADDRESS);
-    require(idToOwner[_tokenId] == address(0), CQIT_ALREADY_EXISTS);
+    require(idToOwner[_tokenId] == address(0), CQITOKEN_ALREADY_EXISTS);
 
     _addCQIToken(_to, _tokenId);
 
@@ -143,7 +147,7 @@ contract CQIToken is ERC721,SupportsInterface{
   }
 
   function _addCQIToken(address _to,uint256 _tokenId)internal virtual{
-    require(idToOwner[_tokenId] == address(0), CQIT_ALREADY_EXISTS);
+    require(idToOwner[_tokenId] == address(0), CQITOKEN_ALREADY_EXISTS);
 
     idToOwner[_tokenId] = _to;
     ownerToCQITokenCount[_to] = ownerToCQITokenCount[_to].add(1);
@@ -164,7 +168,7 @@ contract CQIToken is ERC721,SupportsInterface{
     if (_to.isContract())
     {
       bytes4 retval = ERC721TokenReceiver(_to).onERC721Received(msg.sender, _from, _tokenId, _data);
-      require(retval == MAGIC_ON_ERC721_RECEIVED, NOT_ABLE_TO_RECEIVE_CQIT);
+      require(retval == MAGIC_ON_ERC721_RECEIVED, NOT_ABLE_TO_RECEIVE_CQITOKEN);
     }
   }
 
