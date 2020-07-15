@@ -11,6 +11,8 @@ contract CQIToken is ERC721,SupportsInterface{
   using SafeMath for uint256;
   using AddressUtils for address;
 
+  uint256 public totalSupply;
+
   //Address is zero
   string constant ZERO_ADDRESS = "000";
 
@@ -98,7 +100,7 @@ contract CQIToken is ERC721,SupportsInterface{
   }
 
   function balance()external override view returns (uint256){
-    return _getOwnerCQITCount(address(this));
+    return totalSupply;
   }
 
   function ownerOf(uint256 _tokenId)external override view returns (address _owner){
