@@ -42,7 +42,7 @@ contract CQITokenEnumerable is ERC721Enumerable{
     idToIndex[_tokenId] = tokens.length - 1;
   }
 
-  function _burn(uint256 _tokenId)internal overridevirtual{
+  function _burn(uint256 _tokenId)internal override virtual{
     super._burn(_tokenId);
 
     uint256 tokenIndex = idToIndex[_tokenId];
