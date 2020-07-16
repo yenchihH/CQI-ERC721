@@ -1,12 +1,16 @@
 pragma solidity 0.6.2;
 
 import "./CQItoken.sol";
-import "./erc721-enumerable.sol";
+import "./erc721-data.sol";
 
 
-contract CQITokenEnumerable is CQIToken,ERC721Enumerable{
+contract CQITokenData is CQIToken,ERC721Data{
 
   string constant INVALID_INDEX = "500";
+
+  string internal CQIName;
+
+  string internal CQISymbol;
 
   uint256[] internal tokens;
 
@@ -15,11 +19,6 @@ contract CQITokenEnumerable is CQIToken,ERC721Enumerable{
   mapping(address => uint256[]) internal ownerToIds;
 
   mapping(uint256 => uint256) internal idToOwnerIndex;
-
-
-  string internal CQIName;
-
-  string internal CQISymbol;
 
   mapping (uint256 => string) internal idToUri;
 

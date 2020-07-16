@@ -1,6 +1,6 @@
 pragma solidity 0.6.2;
 
-interface ERC721Enumerable{
+interface ERC721Data{
 
   function totalSupply()external view returns (uint256);
 
