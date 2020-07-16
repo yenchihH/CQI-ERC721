@@ -20,6 +20,33 @@ contract CQITokenEnumerable is CQIToken,ERC721Enumerable{
     supportedInterfaces[0x780e9d63] = true; // ERC721Enumerable
   }
 
+  string internal CQIName;
+
+  string internal CQISymbol;
+
+  mapping (uint256 => string) internal idToUri;
+
+  constructor()public{
+    supportedInterfaces[0x5b5e139f] = true; // ERC721Metadata
+  }
+
+  function name()external override view returns (string memory _name){
+    _name = CQIName;
+  }
+
+  function symbol()external override view returns (string memory _symbol){
+    _symbol = CQISymbol;
+  }
+
+  
+  function tokenURI(uint256 _tokenId)external override view validCQIToken(_tokenId) returns (string memory){
+    return idToUri[_tokenId];
+  }
+
+  function _setTokenUri(uint256 _tokenId,string memory _uri)internal validCQIToken(_tokenId){
+    idToUri[_tokenId] = _uri;
+  }
+
 
   function totalSupply()external override view returns (uint256){
     return tokens.length;
