@@ -42,20 +42,20 @@ contract CQITokenEnumerable is CQIToken,ERC721Enumerable{
   //   idToIndex[_tokenId] = tokens.length - 1;
   // }
 
-  // function _burn(uint256 _tokenId)internal override virtual{
-  //   super._burn(_tokenId);
+  function _burn(uint256 _tokenId)internal override virtual{
+    super._burn(_tokenId);
 
-  //   uint256 tokenIndex = idToIndex[_tokenId];
-  //   uint256 lastTokenIndex = tokens.length - 1;
-  //   uint256 lastToken = tokens[lastTokenIndex];
+    uint256 tokenIndex = idToIndex[_tokenId];
+    uint256 lastTokenIndex = tokens.length - 1;
+    uint256 lastToken = tokens[lastTokenIndex];
 
-  //   tokens[tokenIndex] = lastToken;
+    tokens[tokenIndex] = lastToken;
 
-  //   tokens.pop();
-  //   // This wastes gas if you are burning the last token but saves a little gas if you are not.
-  //   idToIndex[lastToken] = tokenIndex;
-  //   idToIndex[_tokenId] = 0;
-  // }
+    tokens.pop();
+    // This wastes gas if you are burning the last token but saves a little gas if you are not.
+    idToIndex[lastToken] = tokenIndex;
+    idToIndex[_tokenId] = 0;
+  }
 
   
   // function _removeCQIToken(address _from,uint256 _tokenId)internal override virtual{
