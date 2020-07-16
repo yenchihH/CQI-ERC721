@@ -2,13 +2,13 @@ pragma solidity 0.6.2;
 
 import "./erc721.sol";
 import "./erc721-token-receiver.sol";
-import "./token-enumerable.sol";
+
 import "../math/SafeMath.sol";
 import "../utils/interface.sol";
 import "../utils/address-utils.sol";
 
 
-contract CQIToken is ERC721,CQITokenEnumerable,SupportsInterface{
+contract CQIToken is ERC721,SupportsInterface{
   using SafeMath for uint256;
   using AddressUtils for address;
 
@@ -125,39 +125,39 @@ contract CQIToken is ERC721,CQITokenEnumerable,SupportsInterface{
     emit Transfer(from, _to, _tokenId);
   }
 
-  // function _mint(address _to,uint256 _tokenId)internal virtual{
-  //   require(_to != address(0), ZERO_ADDRESS);
-  //   require(idToOwner[_tokenId] == address(0), CQITOKEN_ALREADY_EXISTS);
+  function _mint(address _to,uint256 _tokenId)internal virtual{
+    require(_to != address(0), ZERO_ADDRESS);
+    require(idToOwner[_tokenId] == address(0), CQITOKEN_ALREADY_EXISTS);
     
-  //   _addCQIToken(_to, _tokenId);
-  //   emit Transfer(address(0), _to, _tokenId);
-  // }
+    _addCQIToken(_to, _tokenId);
+    emit Transfer(address(0), _to, _tokenId);
+  }
 
  
-  // function _burn(uint256 _tokenId)internal virtual validCQIToken(_tokenId){
-  //   address tokenOwner = idToOwner[_tokenId];
-  //   _clearApproval(_tokenId);
-  //   _removeCQIToken(tokenOwner, _tokenId);
-  //   emit Transfer(tokenOwner, address(0), _tokenId);
-  // }
+  function _burn(uint256 _tokenId)internal virtual validCQIToken(_tokenId){
+    address tokenOwner = idToOwner[_tokenId];
+    _clearApproval(_tokenId);
+    _removeCQIToken(tokenOwner, _tokenId);
+    emit Transfer(tokenOwner, address(0), _tokenId);
+  }
 
   
-  // function _removeCQIToken(address _from,uint256 _tokenId)internal virtual{
-  //   require(idToOwner[_tokenId] == _from, NOT_OWNER);
-  //   ownerToCQITokenCount[_from] = ownerToCQITokenCount[_from] - 1;
-  //   delete idToOwner[_tokenId];
-  // }
+  function _removeCQIToken(address _from,uint256 _tokenId)internal virtual{
+    require(idToOwner[_tokenId] == _from, NOT_OWNER);
+    ownerToCQITokenCount[_from] = ownerToCQITokenCount[_from] - 1;
+    delete idToOwner[_tokenId];
+  }
 
-  // function _addCQIToken(address _to,uint256 _tokenId)internal virtual{
-  //   require(idToOwner[_tokenId] == address(0), CQITOKEN_ALREADY_EXISTS);
+  function _addCQIToken(address _to,uint256 _tokenId)internal virtual{
+    require(idToOwner[_tokenId] == address(0), CQITOKEN_ALREADY_EXISTS);
 
-  //   idToOwner[_tokenId] = _to;
-  //   ownerToCQITokenCount[_to] = ownerToCQITokenCount[_to].add(1);
-  // }
+    idToOwner[_tokenId] = _to;
+    ownerToCQITokenCount[_to] = ownerToCQITokenCount[_to].add(1);
+  }
 
-  // function _getOwnerCQITCount(address _owner)internal virtual view returns (uint256){
-  //   return ownerToCQITokenCount[_owner];
-  // }
+  function _getOwnerCQITCount(address _owner)internal virtual view returns (uint256){
+    return ownerToCQITokenCount[_owner];
+  }
 
   
   function _safeTransferFrom(address _from,address _to,uint256 _tokenId,bytes memory _data)private canTransfer(_tokenId) validCQIToken(_tokenId){

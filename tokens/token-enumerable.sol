@@ -1,10 +1,10 @@
 pragma solidity 0.6.2;
 
-//import "./CQItoken.sol";
+import "./CQItoken.sol";
 import "./erc721-enumerable.sol";
 
 
-contract CQITokenEnumerable is ERC721Enumerable{
+contract CQITokenEnumerable is CQIToken,ERC721Enumerable{
 
   string constant INVALID_INDEX = "500";
 
