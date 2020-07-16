@@ -36,11 +36,11 @@ contract CQITokenEnumerable is CQIToken,ERC721Enumerable{
   }
 
 
-  // function _mint(address _to,uint256 _tokenId)internal override virtual{
-  //   super._mint(_to, _tokenId);
-  //   tokens.push(_tokenId);
-  //   idToIndex[_tokenId] = tokens.length - 1;
-  // }
+  function _mint(address _to,uint256 _tokenId)internal override virtual{
+    super._mint(_to, _tokenId);
+    tokens.push(_tokenId);
+    idToIndex[_tokenId] = tokens.length - 1;
+  }
 
   function _burn(uint256 _tokenId)internal override virtual{
     super._burn(_tokenId);
@@ -58,31 +58,31 @@ contract CQITokenEnumerable is CQIToken,ERC721Enumerable{
   }
 
   
-  // function _removeCQIToken(address _from,uint256 _tokenId)internal override virtual{
-  //   require(idToOwner[_tokenId] == _from, NOT_OWNER);
-  //   delete idToOwner[_tokenId];
+  function _removeCQIToken(address _from,uint256 _tokenId)internal override virtual{
+    require(idToOwner[_tokenId] == _from, NOT_OWNER);
+    delete idToOwner[_tokenId];
 
-  //   uint256 tokenToRemoveIndex = idToOwnerIndex[_tokenId];
-  //   uint256 lastTokenIndex = ownerToIds[_from].length - 1;
+    uint256 tokenToRemoveIndex = idToOwnerIndex[_tokenId];
+    uint256 lastTokenIndex = ownerToIds[_from].length - 1;
 
-  //   if (lastTokenIndex != tokenToRemoveIndex){
-  //     uint256 lastToken = ownerToIds[_from][lastTokenIndex];
-  //     ownerToIds[_from][tokenToRemoveIndex] = lastToken;
-  //     idToOwnerIndex[lastToken] = tokenToRemoveIndex;
-  //   }
+    if (lastTokenIndex != tokenToRemoveIndex){
+      uint256 lastToken = ownerToIds[_from][lastTokenIndex];
+      ownerToIds[_from][tokenToRemoveIndex] = lastToken;
+      idToOwnerIndex[lastToken] = tokenToRemoveIndex;
+    }
 
-  //   ownerToIds[_from].pop();
-  // }
+    ownerToIds[_from].pop();
+  }
 
-  // function _addCQIToken(address _to,uint256 _tokenId)internal override virtual{
-  //   require(idToOwner[_tokenId] == address(0), CQITOKEN_ALREADY_EXISTS);
-  //   idToOwner[_tokenId] = _to;
+  function _addCQIToken(address _to,uint256 _tokenId)internal override virtual{
+    require(idToOwner[_tokenId] == address(0), CQITOKEN_ALREADY_EXISTS);
+    idToOwner[_tokenId] = _to;
 
-  //   ownerToIds[_to].push(_tokenId);
-  //   idToOwnerIndex[_tokenId] = ownerToIds[_to].length - 1;
-  // }
+    ownerToIds[_to].push(_tokenId);
+    idToOwnerIndex[_tokenId] = ownerToIds[_to].length - 1;
+  }
 
-  // function _getOwnerCQITCount(address _owner)internal override virtual view returns (uint256){
-  //   return ownerToIds[_owner].length;
-  // }
+  function _getOwnerCQITCount(address _owner)internal override virtual view returns (uint256){
+    return ownerToIds[_owner].length;
+  }
 }
