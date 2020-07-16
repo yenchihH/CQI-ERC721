@@ -8,7 +8,7 @@ import "../utils/interface.sol";
 import "../utils/address-utils.sol";
 
 
-contract CQIToken is ERC721,,ERC721Enumerable,SupportsInterface{
+contract CQIToken is ERC721,ERC721Enumerable,SupportsInterface{
   using SafeMath for uint256;
   using AddressUtils for address;
 
