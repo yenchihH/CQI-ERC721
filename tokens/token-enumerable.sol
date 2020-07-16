@@ -16,9 +16,6 @@ contract CQITokenEnumerable is CQIToken,ERC721Enumerable{
 
   mapping(uint256 => uint256) internal idToOwnerIndex;
 
-  constructor()public{
-    supportedInterfaces[0x780e9d63] = true; // ERC721Enumerable
-  }
 
   string internal CQIName;
 
