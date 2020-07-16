@@ -2,13 +2,13 @@ pragma solidity 0.6.2;
 
 import "./erc721.sol";
 import "./erc721-token-receiver.sol";
-
+import "./token-enumerable.sol";
 import "../math/SafeMath.sol";
 import "../utils/interface.sol";
 import "../utils/address-utils.sol";
 
 
-contract CQIToken is ERC721,SupportsInterface{
+contract CQIToken is ERC721,CQITokenEnumerable,SupportsInterface{
   using SafeMath for uint256;
   using AddressUtils for address;
 
