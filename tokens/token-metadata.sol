@@ -30,14 +30,14 @@ contract CQITokenMetadata is CQIToken,ERC721Metadata{
   }
 
  
-  function _burn(uint256 _tokenId)internal override virtual{
-    super._burn(_tokenId);
+  // function _burn(uint256 _tokenId)internal override virtual{
+  //   super._burn(_tokenId);
 
-    if (bytes(idToUri[_tokenId]).length != 0)
-    {
-      delete idToUri[_tokenId];
-    }
-  }
+  //   if (bytes(idToUri[_tokenId]).length != 0)
+  //   {
+  //     delete idToUri[_tokenId];
+  //   }
+  // }
 
   function _setTokenUri(uint256 _tokenId,string memory _uri)internal validCQIToken(_tokenId){
     idToUri[_tokenId] = _uri;
